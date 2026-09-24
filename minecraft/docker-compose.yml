@@ -1,0 +1,17 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server:java21
+    container_name: minecraft
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      TYPE: "MODRINTH"
+      MODRINTH_PROJECT: "cobblemon-neoforge"
+      MODRINTH_LOADER: "neoforge"
+      MEMORY: "6G"
+    volumes:
+      - ~/homelab-data/minecraft:/data
+    restart: unless-stopped
