@@ -1,35 +1,4 @@
 services:
-  jellyfin:
-    image: jellyfin/jellyfin
-    container_name: jellyfin
-    restart: 'unless-stopped'
-    user: 1000:100
-    ports:
-      - 8096:8096/tcp
-      - 7359:7359/udp
-    volumes:
-      - ~/homelab-data/jellyfin/config:/config
-      - ~/homelab-data/jellyfin/cache:/cache
-      - type: bind
-        source: ~/media
-        target: /media
-        read_only: true
-  database:
-    image: postgres:18
-    container_name: database
-    restart: 'unless-stopped'
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: mealie
-      PGUSER: ${POSTGRES_USER}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
   mealie:
     image: ghcr.io/mealie-recipes/mealie:v3.28.0
     container_name: mealie
@@ -61,5 +30,4 @@ services:
         condition: service_healthy
 
 volumes:
-  postgres_data:
   mealie_data:
